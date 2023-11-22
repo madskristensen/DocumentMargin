@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,18 +24,25 @@ namespace DocumentMargin.Margin
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
             Padding = new Thickness(5, 3, 5, 0);
 
-            SetEncoding(_doc.Encoding);
-
-            ContextMenu = new ContextMenu();
             MouseUp += OnMouseUp;
 
+            SetEncoding(_doc.Encoding);
+
+            ContextMenu = new ContextMenu
+            {
+                ItemsSource = GetContextMenuItems()
+            };
+        }
+
+        private IEnumerable<MenuItem> GetContextMenuItems()
+        {
             foreach (EncodingInfo encodingInfo in Encoding.GetEncodings().OrderBy(e => e.DisplayName))
             {
                 Encoding enc = encodingInfo.GetEncoding();
 
                 if (enc.IsBrowserSave)
                 {
-                    _ = ContextMenu.Items.Add(new MenuItem { Header = $"{enc.EncodingName} - Codepage {enc.CodePage}", Command = new DelegateCommand(() => { _doc.Encoding = enc; _doc.UpdateDirtyState(true, DateTime.Now); }) });
+                    yield return new MenuItem { Header = $"{enc.EncodingName} - Codepage {enc.CodePage}", Command = new DelegateCommand(() => { _doc.Encoding = enc; _doc.UpdateDirtyState(true, DateTime.Now); }) };
                 }
             }
         }

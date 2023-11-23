@@ -20,7 +20,9 @@ namespace DocumentMargin.Margin
 
             SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
-            Padding = new Thickness(5, 3, 5, 0);
+            FontSize = 11;
+            Margin = new Thickness(0, 0, 0, 0);
+            Padding = new Thickness(9, 0, 9, 0);
             Visibility = Visibility.Collapsed;
 
             SetSelection();

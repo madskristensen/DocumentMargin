@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
@@ -15,9 +14,6 @@ namespace DocumentMargin.Margin
     [DeferCreation(OptionName = DefaultTextViewHostOptions.EditingStateMarginOptionName)]
     internal class SelectionMarginProvider : IWpfTextViewMarginProvider
     {
-        [Import]
-        public ITextDocumentFactoryService _documentService = null;
-
         public IWpfTextViewMargin CreateMargin(IWpfTextViewHost wpfTextViewHost, IWpfTextViewMargin marginContainer)
         {
             return new SelectionMargin(wpfTextViewHost.TextView);

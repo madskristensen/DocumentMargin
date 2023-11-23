@@ -22,16 +22,15 @@ namespace DocumentMargin.Margin
 
             SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
-            Padding = new Thickness(5, 3, 5, 0);
+            FontSize = 11;
+            Margin = new Thickness(0, 0, 0, 0);
+            Padding = new Thickness(9, 0, 9, 0);
 
             MouseUp += OnMouseUp;
+            ContextMenu = new ContextMenu();
 
             SetEncoding(_doc.Encoding);
 
-            ContextMenu = new ContextMenu
-            {
-                ItemsSource = GetContextMenuItems()
-            };
         }
 
         private IEnumerable<MenuItem> GetContextMenuItems()
@@ -49,6 +48,7 @@ namespace DocumentMargin.Margin
 
         private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            ContextMenu.ItemsSource = GetContextMenuItems();
             ContextMenu.IsOpen = true;
         }
 

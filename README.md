@@ -2,7 +2,7 @@
 [vsixgallery]: http://vsixgallery.com/extension/DocumentMargin.a5a7bd52-f250-4930-83b4-2085f8b9c7de4/
 [repo]:https://github.com/madskristensen/DocumentMargin
 
-# Blue Steel - Fluent theme for Visual Studio
+# Document Margin extension for Visual Studio
 
 [![Build](https://github.com/madskristensen/DocumentMargin/actions/workflows/build.yaml/badge.svg)](https://github.com/madskristensen/DocumentMargin/actions/workflows/build.yaml)
 

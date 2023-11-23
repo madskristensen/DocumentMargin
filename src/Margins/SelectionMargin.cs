@@ -94,7 +94,7 @@ namespace DocumentMargin.Margin
 
         public ITextViewMargin GetTextViewMargin(string marginName)
         {
-            return (marginName == MarginName) ? (IWpfTextViewMargin)this : null;
+            return (marginName == MarginName) ? this : null;
         }
     }
 }

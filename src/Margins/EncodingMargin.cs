@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
@@ -11,7 +12,7 @@ namespace DocumentMargin.Margin
 {
     internal class EncodingMargin : TextBlock, IWpfTextViewMargin
     {
-        public const string MarginName = "Document Margin";
+        public const string MarginName = "Encoding Margin";
         private readonly ITextDocument _doc;
         private bool _isDisposed;
 
@@ -20,17 +21,31 @@ namespace DocumentMargin.Margin
             _doc = doc;
             doc.EncodingChanged += OnEncodingChanged;
 
-            SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
-            SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
+            SetColors();
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
             Padding = new Thickness(9, 0, 9, 0);
 
             MouseUp += OnMouseUp;
-            ContextMenu = new ContextMenu();
+            MouseEnter += SetColors;
+            MouseLeave += SetColors;
+            ContextMenu ??= new ContextMenu();
 
             SetEncoding(_doc.Encoding);
+        }
 
+        private void SetColors(object sender = null, MouseEventArgs e = null)
+        {
+            if (IsMouseDirectlyOver)
+            {
+                SetResourceReference(BackgroundProperty, EnvironmentColors.CommandBarMouseOverBackgroundGradientBrushKey);
+                SetResourceReference(ForegroundProperty, EnvironmentColors.CommandBarTextHoverBrushKey);
+            }
+            else
+            {
+                SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
+                SetResourceReference(ForegroundProperty, EnvironmentColors.ToolWindowTextBrushKey);
+            }
         }
 
         private IEnumerable<MenuItem> GetContextMenuItems()
@@ -46,7 +61,7 @@ namespace DocumentMargin.Margin
             }
         }
 
-        private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
             ContextMenu.ItemsSource = GetContextMenuItems();
             ContextMenu.IsOpen = true;
@@ -109,7 +124,7 @@ namespace DocumentMargin.Margin
 
         public ITextViewMargin GetTextViewMargin(string marginName)
         {
-            return (marginName == MarginName) ? (IWpfTextViewMargin)this : null;
+            return (marginName == MarginName) ? this : null;
         }
     }
 }

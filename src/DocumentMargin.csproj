@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Margins\BaseMargin.cs" />
     <Compile Include="Margins\LengthMargin.cs" />
     <Compile Include="Margins\SelectionMargin.cs" />
     <Compile Include="Margins\EncodingMargin.cs" />

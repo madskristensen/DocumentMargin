@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.Utilities;
 namespace DocumentMargin.Margin
 {
     [Export(typeof(IWpfTextViewMarginProvider))]
-    [Name(EncodingMargin.MarginName)]
+    [Name(nameof(EncodingMargin))]
     [MarginContainer(PredefinedMarginNames.BottomRightCorner)]
     [Order(After = PredefinedMarginNames.LineEndingMargin)]
     [ContentType(StandardContentTypeNames.Text)]

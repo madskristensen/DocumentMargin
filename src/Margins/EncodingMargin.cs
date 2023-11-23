@@ -4,15 +4,14 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DocumentMargin.Margins;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
 
 namespace DocumentMargin.Margin
 {
-    internal class EncodingMargin : TextBlock, IWpfTextViewMargin
+    internal class EncodingMargin : BaseMargin
     {
-        public const string MarginName = "Encoding Margin";
         private readonly ITextDocument _doc;
         private bool _isDisposed;
 
@@ -33,6 +32,8 @@ namespace DocumentMargin.Margin
 
             SetEncoding(_doc.Encoding);
         }
+
+        public override string MarginName => "Encoding Margin";
 
         private void SetColors(object sender = null, MouseEventArgs e = null)
         {
@@ -77,40 +78,7 @@ namespace DocumentMargin.Margin
             Text = encoding.EncodingName;
         }
 
-        private void ThrowIfDisposed()
-        {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException(MarginName);
-            }
-        }
-        public FrameworkElement VisualElement
-        {
-            get
-            {
-                ThrowIfDisposed();
-                return this;
-            }
-        }
-        public double MarginSize
-        {
-            get
-            {
-                ThrowIfDisposed();
-                return ActualHeight;
-            }
-        }
-
-        public bool Enabled
-        {
-            get
-            {
-                ThrowIfDisposed();
-                return true;
-            }
-        }
-
-        public void Dispose()
+        public override void Dispose()
         {
             if (!_isDisposed)
             {
@@ -120,11 +88,6 @@ namespace DocumentMargin.Margin
                 _doc.EncodingChanged -= OnEncodingChanged;
                 MouseUp -= OnMouseUp;
             }
-        }
-
-        public ITextViewMargin GetTextViewMargin(string marginName)
-        {
-            return (marginName == MarginName) ? this : null;
         }
     }
 }

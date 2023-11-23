@@ -1,15 +1,14 @@
 ﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
+using DocumentMargin.Margins;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Text.Editor.OptionsExtensionMethods;
 
 namespace DocumentMargin.Margin
 {
-    internal class SelectionMargin : TextBlock, IWpfTextViewMargin
+    internal class SelectionMargin : BaseMargin
     {
-        public const string MarginName = "Selection Margin";
+        public override string MarginName => "Selection Margin";
         private readonly ITextView2 _view;
         private bool _isDisposed;
 
@@ -48,40 +47,7 @@ namespace DocumentMargin.Margin
             }
         }
 
-        private void ThrowIfDisposed()
-        {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException(MarginName);
-            }
-        }
-        public FrameworkElement VisualElement
-        {
-            get
-            {
-                ThrowIfDisposed();
-                return this;
-            }
-        }
-        public double MarginSize
-        {
-            get
-            {
-                ThrowIfDisposed();
-                return ActualHeight;
-            }
-        }
-
-        public bool Enabled
-        {
-            get
-            {
-                ThrowIfDisposed();
-                return _view.Options.IsLineNumberMarginEnabled(); ;
-            }
-        }
-
-        public void Dispose()
+        public override void Dispose()
         {
             if (!_isDisposed)
             {
@@ -90,11 +56,6 @@ namespace DocumentMargin.Margin
 
                 _view.Selection.SelectionChanged -= OnSelectionChanged;
             }
-        }
-
-        public ITextViewMargin GetTextViewMargin(string marginName)
-        {
-            return (marginName == MarginName) ? this : null;
         }
     }
 }

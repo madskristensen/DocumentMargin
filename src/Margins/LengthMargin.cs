@@ -22,7 +22,7 @@ namespace DocumentMargin.Margin
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
-            Padding = new Thickness(0, 3, 0, 0);
+            Padding = new Thickness(0, 1, 0, 0);
 
             SetValue();
         }

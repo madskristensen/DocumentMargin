@@ -1,51 +1,46 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.PlatformUI;
+using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Editor.OptionsExtensionMethods;
 
 namespace DocumentMargin.Margin
 {
-    internal class SelectionMargin : TextBlock, IWpfTextViewMargin
+    internal class LengthMargin : TextBlock, IWpfTextViewMargin
     {
-        public const string MarginName = "Selection Margin";
+        public const string MarginName = "Length Margin";
         private readonly ITextView2 _view;
         private bool _isDisposed;
 
-        public SelectionMargin(ITextView view)
+        public LengthMargin(ITextView view)
         {
             _view = (ITextView2)view;
-            _view.Selection.SelectionChanged += OnSelectionChanged;
+            _view.TextBuffer.PostChanged += OnTextBufferChanged;
 
             SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
-            Padding = new Thickness(9, 3, 9, 0);
-            Visibility = Visibility.Collapsed;
+            Padding = new Thickness(0, 3, 0, 0);
 
-            SetSelection();
+            SetValue();
         }
 
-        private void OnSelectionChanged(object sender, EventArgs e)
+        private void OnTextBufferChanged(object sender, EventArgs e)
         {
-            SetSelection();
+            SetValue();
         }
 
-        private void SetSelection()
+        private void SetValue()
         {
-            var length = _view.MultiSelectionBroker.AllSelections.Select(s => s.Extent.Length).Sum();
+            _ = ThreadHelper.JoinableTaskFactory.StartOnIdle(() =>
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+                ITextSnapshot snapshot = _view.TextSnapshot;
+                Text = $"Length: {snapshot.Length}    Lines: {snapshot.LineCount}";
 
-            if (length > 0)
-            {
-                Text = $"Sel: {length}";
-                Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Visibility = Visibility.Collapsed;
-            }
+            }, VsTaskRunContext.UIThreadIdlePriority);
         }
 
         private void ThrowIfDisposed()
@@ -88,7 +83,7 @@ namespace DocumentMargin.Margin
                 GC.SuppressFinalize(this);
                 _isDisposed = true;
 
-                _view.Selection.SelectionChanged -= OnSelectionChanged;
+                _view.TextBuffer.PostChanged -= OnTextBufferChanged;
             }
         }
 

@@ -28,8 +28,10 @@ namespace DocumentMargin.Margin
             MouseUp += OnMouseUp;
             MouseEnter += SetColors;
             MouseLeave += SetColors;
-            ContextMenu ??= new ContextMenu();
 
+            ContextMenu ??= new ContextMenu();
+            //Themes.SetUseVsTheme(ContextMenu, true);
+            
             SetEncoding(_doc.Encoding);
         }
 
@@ -57,7 +59,11 @@ namespace DocumentMargin.Margin
 
                 if (enc.IsBrowserSave)
                 {
-                    yield return new MenuItem { Header = $"{enc.EncodingName} - Codepage {enc.CodePage}", Command = new DelegateCommand(() => { _doc.Encoding = enc; _doc.UpdateDirtyState(true, DateTime.Now); }) };
+                    yield return new MenuItem { 
+                        Header = $"{enc.EncodingName} - Codepage {enc.CodePage}", 
+                        IsChecked = enc == _doc.Encoding, 
+                        Command = new DelegateCommand(() => { _doc.Encoding = enc; _doc.UpdateDirtyState(true, DateTime.Now); }) 
+                    };
                 }
             }
         }

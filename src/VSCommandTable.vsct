@@ -7,11 +7,36 @@
   <Include href="VSGlobals.vsct"/>
 
   <Commands package="DocumentMargin">
+    <Menus>
+      <Menu guid="DocumentMargin" id="EncodingMenu" type="Context">
+        <Strings>
+          <ButtonText>Encoding Context Menu</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <Group guid="DocumentMargin" id="EncodingMenuGroup" priority="0">
+        <Parent guid="DocumentMargin" id="EncodingMenu"/>
+      </Group>
+    </Groups>
+    
+    <Buttons>
+      <Button guid="DocumentMargin" id="EncodingMenuDynamicStart" type="Button" priority="0">
+        <Parent guid="DocumentMargin" id="EncodingMenuGroup"/>
+        <CommandFlag>DynamicItemStart</CommandFlag>
+        <Strings>
+          <ButtonText>Encoding...</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
   </Commands>
 
   <Symbols>
     <GuidSymbol name="DocumentMargin" value="{91ef11a2-e68d-4ac8-80be-aefff53f409a}">
-      
+      <IDSymbol name="EncodingMenu" value="0x0001"/>
+      <IDSymbol name="EncodingMenuGroup" value="0x0002"/>
+      <IDSymbol name="EncodingMenuDynamicStart" value="0x1001"/>
     </GuidSymbol>
   </Symbols>
 </CommandTable>

@@ -1,27 +1,27 @@
-﻿using System.ComponentModel.Design;
+﻿using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 
 namespace DocumentMargin.Commands
 {
     internal class EncodingMenuCommandBridge
     {
-        private readonly IAsyncServiceProvider _serviceProvider;
-
-        public EncodingMenuCommandBridge(IAsyncServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
+        private const uint _showOptions = (uint)(__VSSHOWCONTEXTMENUOPTS2.VSCTXMENU_PLACETOP | __VSSHOWCONTEXTMENUOPTS2.VSCTXMENU_RIGHTALIGN);
 
         public ITextDocument CurrentDocument { get; private set; }
 
         public async Task ShowAsync(ITextDocument document, int x, int y)
         {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             CurrentDocument = document;
 
             try
             {
-                IMenuCommandService commandService = await _serviceProvider.GetServiceAsync<IMenuCommandService, IMenuCommandService>();
-                commandService.ShowContextMenu(new CommandID(PackageGuids.DocumentMargin, PackageIds.EncodingMenu), x, y);
+                IVsUIShell shell = await VS.Services.GetUIShellAsync();
+                POINTS[] locationPoints = new[] { new POINTS() { x = (short)x, y = (short)y } };
+                _ = shell.ShowContextMenu(_showOptions, PackageGuids.DocumentMargin, PackageIds.EncodingMenu, locationPoints, pCmdTrgtActive: null);
+
+                //IMenuCommandService commandService = await _serviceProvider.GetServiceAsync<IMenuCommandService, IMenuCommandService>();
+                //commandService.ShowContextMenu(new CommandID(PackageGuids.DocumentMargin, PackageIds.EncodingMenu), x, y);
             }
             finally
             {

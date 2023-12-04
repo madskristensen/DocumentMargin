@@ -33,13 +33,8 @@ namespace DocumentMargin.Margin
 
         private void SetValue()
         {
-            _ = ThreadHelper.JoinableTaskFactory.StartOnIdle(() =>
-            {
-                ThreadHelper.ThrowIfNotOnUIThread();
-                ITextSnapshot snapshot = _view.TextSnapshot;
-                Text = $"Length: {snapshot.Length}    Lines: {snapshot.LineCount}";
-
-            }, VsTaskRunContext.UIThreadIdlePriority);
+            ITextSnapshot snapshot = _view.TextSnapshot;
+            Content = $"Length: {snapshot.Length}    Lines: {snapshot.LineCount}";
         }
 
         public override void Dispose()

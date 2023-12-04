@@ -22,7 +22,8 @@ namespace DocumentMargin.Margin
             SetColors();
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
-            Padding = new Thickness(9, 1, 9, 0);
+            Padding = new Thickness(9, 0, 9, 0);
+            BorderThickness= new Thickness(1);
 
             MouseUp += OnMouseUp;
             MouseEnter += SetColors;
@@ -35,15 +36,18 @@ namespace DocumentMargin.Margin
 
         private void SetColors(object sender = null, MouseEventArgs e = null)
         {
-            if (IsMouseDirectlyOver)
+            if (IsMouseOver)
             {
                 SetResourceReference(BackgroundProperty, EnvironmentColors.CommandBarMouseOverBackgroundGradientBrushKey);
                 SetResourceReference(ForegroundProperty, EnvironmentColors.CommandBarTextHoverBrushKey);
+                SetResourceReference(BorderBrushProperty, EnvironmentColors.CommandBarHoverOverSelectedIconBorderBrushKey);
             }
             else
             {
                 SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
                 SetResourceReference(ForegroundProperty, EnvironmentColors.ToolWindowTextBrushKey);
+                SetResourceReference(BorderBrushProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
+
             }
         }
 
@@ -65,7 +69,7 @@ namespace DocumentMargin.Margin
 
         private void SetEncoding(Encoding encoding)
         {
-            Text = encoding.EncodingName;
+            Content = encoding.EncodingName;
         }
 
         public override void Dispose()
@@ -77,6 +81,8 @@ namespace DocumentMargin.Margin
 
                 _doc.EncodingChanged -= OnEncodingChanged;
                 MouseUp -= OnMouseUp;
+                MouseEnter -= SetColors;
+                MouseLeave -= SetColors;
             }
         }
     }

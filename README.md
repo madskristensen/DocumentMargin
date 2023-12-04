@@ -11,7 +11,17 @@ or get the [CI build][vsixgallery].
 
 ----------------------------------------
 
-coming soon...
+This extension adds a margin to the editor that displays the text length, selection length, and total number of lines in the file. It also shows the encoding of the of the file and let you easily change it.
+
+![Basic](art/basic.png)
+
+When you select text, the margin will display the number of selected characters.
+
+![Selection](art/selection.png)
+
+Clicking the encoding indicator will open a drop down menu that lets you change the encoding of the file.
+
+![Encoding](art/encoding.png)
 
 ## How can I help?
 If you enjoy using the extension, please give it a ★★★★★ rating on the [Visual Studio Marketplace][marketplace].

@@ -1,14 +1,10 @@
-﻿global using Community.VisualStudio.Toolkit;
-
+﻿global using System;
+global using Community.VisualStudio.Toolkit;
 global using Microsoft.VisualStudio.Shell;
-
-global using System;
-
 global using Task = System.Threading.Tasks.Task;
-
-using DocumentMargin.Commands;
 using System.Runtime.InteropServices;
 using System.Threading;
+using DocumentMargin.Commands;
 
 namespace DocumentMargin
 {
@@ -23,7 +19,7 @@ namespace DocumentMargin
         {
             AddService(
                 typeof(EncodingMenuCommandBridge),
-                (_, _, _) => Task.FromResult<object>(new EncodingMenuCommandBridge(this)),
+                (_, _, _) => Task.FromResult<object>(new EncodingMenuCommandBridge()),
                 true
             );
 

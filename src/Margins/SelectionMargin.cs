@@ -38,7 +38,7 @@ namespace DocumentMargin.Margin
 
             if (length > 0)
             {
-                Text = $"Sel: {length}";
+                Content = $"Sel: {length}";
                 Visibility = Visibility.Visible;
             }
             else

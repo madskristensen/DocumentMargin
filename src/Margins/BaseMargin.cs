@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Text.Editor;
 
 namespace DocumentMargin.Margins
 {
-    internal abstract class BaseMargin : TextBlock, IWpfTextViewMargin
+    internal abstract class BaseMargin : Label, IWpfTextViewMargin
     {
         public abstract string MarginName { get; }
 

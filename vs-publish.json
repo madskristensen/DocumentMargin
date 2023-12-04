@@ -4,7 +4,7 @@
   "private": false,
   "identity": {
     "internalName": "DocumentMargin",
-    "tags": [ "encoding", "selection", "editor" ]
+    "tags": [ "encoding", "selection", "editor", "margin" ]
   },
   "assetFiles": [
     {

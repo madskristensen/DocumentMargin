@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using DocumentMargin.Commands;
 using DocumentMargin.Margins;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Text;
@@ -29,9 +28,6 @@ namespace DocumentMargin.Margin
             MouseEnter += SetColors;
             MouseLeave += SetColors;
 
-            ContextMenu ??= new ContextMenu();
-            //Themes.SetUseVsTheme(ContextMenu, true);
-            
             SetEncoding(_doc.Encoding);
         }
 
@@ -51,27 +47,15 @@ namespace DocumentMargin.Margin
             }
         }
 
-        private IEnumerable<MenuItem> GetContextMenuItems()
-        {
-            foreach (EncodingInfo encodingInfo in Encoding.GetEncodings().OrderBy(e => e.DisplayName))
-            {
-                Encoding enc = encodingInfo.GetEncoding();
-
-                if (enc.IsBrowserSave)
-                {
-                    yield return new MenuItem { 
-                        Header = $"{enc.EncodingName} - Codepage {enc.CodePage}", 
-                        IsChecked = enc == _doc.Encoding, 
-                        Command = new DelegateCommand(() => { _doc.Encoding = enc; _doc.UpdateDirtyState(true, DateTime.Now); }) 
-                    };
-                }
-            }
-        }
-
+        [SuppressMessage("Usage", "VSTHRD102:Implement internal logic asynchronously", Justification = "Event handler.")]
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            ContextMenu.ItemsSource = GetContextMenuItems();
-            ContextMenu.IsOpen = true;
+            ThreadHelper.JoinableTaskFactory.Run(async () =>
+            {
+                EncodingMenuCommandBridge bridge = await VS.GetRequiredServiceAsync<EncodingMenuCommandBridge, EncodingMenuCommandBridge>();
+                Point point = PointToScreen(e.GetPosition(this));
+                await bridge.ShowAsync(_doc, (int)point.X, (int)point.Y);
+            });
         }
 
         private void OnEncodingChanged(object sender, EncodingChangedEventArgs e)

@@ -7,7 +7,18 @@
     "tags": [ "encoding", "selection", "editor" ]
   },
   "assetFiles": [
-
+    {
+      "pathOnDisk": "art/basic.png",
+      "targetPath": "art/basic.png"
+    },
+    {
+      "pathOnDisk": "art/encoding.png",
+      "targetPath": "art/encoding.png"
+    },
+    {
+      "pathOnDisk": "art/selection.png",
+      "targetPath": "art/selection.png"
+    }
   ],
   "overview": "README.md",
   "publisher": "MadsKristensen",

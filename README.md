@@ -11,6 +11,8 @@ or get the [CI build][vsixgallery].
 
 ----------------------------------------
 
+> The solution is based on [this feature request](https://developercommunity.visualstudio.com/t/Code-Editor-Horizontal-Scroll-Bar-Displa/10514754) for Visual Studio.
+
 This extension adds a margin to the editor that displays the text length, selection length, and total number of lines in the file. It also shows the encoding of the of the file and let you easily change it.
 
 ![Basic](art/basic.png)

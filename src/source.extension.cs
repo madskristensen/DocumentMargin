@@ -8,8 +8,8 @@ namespace DocumentMargin
     internal sealed partial class Vsix
     {
         public const string Id = "DocumentMargin.a5a7bd52-f250-4930-83b4-2085f8b9c7de";
-        public const string Name = "Document Margin";
-        public const string Description = @"Adds encoding and selection information to the bottom editor margin";
+        public const string Name = "Editor Info";
+        public const string Description = @"This extension adds a margin to the editor that displays the text length, selection length, and total number of lines in the file. It also shows the encoding of the of the file and let you easily change it.";
         public const string Language = "en-US";
         public const string Version = "1.0";
         public const string Author = "Mads Kristensen";

@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="DocumentMargin.a5a7bd52-f250-4930-83b4-2085f8b9c7de" Version="1.0" Language="en-US" Publisher="Mads Kristensen" />
         <DisplayName>Editor Info</DisplayName>
-        <Description xml:space="preserve">This extension adds a margin to the editor that displays the text length, selection length, and total number of lines in the file. It also shows the encoding of the of the file and let you easily change it.</Description>
+        <Description xml:space="preserve">Adds a margin to the editor that displays the text length, selection length, and total number of lines in the file. It also shows the encoding of the of the file and let you easily change it.</Description>
         <MoreInfo>https://github.com/madskristensen/DocumentMargin/</MoreInfo>
         <License>Resources\LICENSE</License>
         <Icon>Resources\Icon.png</Icon>

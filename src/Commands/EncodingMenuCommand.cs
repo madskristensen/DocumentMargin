@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualStudio.Telemetry;
 
 namespace DocumentMargin.Commands
 {
@@ -10,7 +11,7 @@ namespace DocumentMargin.Commands
         private EncodingMenuCommandBridge _bridge;
         private IReadOnlyList<Encoding> _encodings;
 
-        protected async override Task InitializeCompletedAsync()
+        protected override async Task InitializeCompletedAsync()
         {
             _bridge = await Package.GetServiceAsync<EncodingMenuCommandBridge, EncodingMenuCommandBridge>();
         }
@@ -37,6 +38,11 @@ namespace DocumentMargin.Commands
             {
                 _bridge.CurrentDocument.Encoding = item;
                 _bridge.CurrentDocument.UpdateDirtyState(true, DateTime.Now);
+
+                TelemetryEvent tel = Telemetry.CreateEvent("changeencoding");
+                tel.Properties["encoding"] = item.EncodingName;
+
+                Telemetry.TrackEvent(tel);
             }
         }
     }

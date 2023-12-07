@@ -20,8 +20,7 @@ namespace DocumentMargin.Commands
                 POINTS[] locationPoints = new[] { new POINTS() { x = (short)x, y = (short)y } };
                 _ = shell.ShowContextMenu(_showOptions, PackageGuids.DocumentMargin, PackageIds.EncodingMenu, locationPoints, pCmdTrgtActive: null);
 
-                //IMenuCommandService commandService = await _serviceProvider.GetServiceAsync<IMenuCommandService, IMenuCommandService>();
-                //commandService.ShowContextMenu(new CommandID(PackageGuids.DocumentMargin, PackageIds.EncodingMenu), x, y);
+                Telemetry.TrackUserTask("openencodingmenu");
             }
             finally
             {

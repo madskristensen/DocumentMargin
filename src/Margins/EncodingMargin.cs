@@ -23,7 +23,7 @@ namespace DocumentMargin.Margin
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
             Padding = new Thickness(9, 0, 9, 0);
-            BorderThickness= new Thickness(1);
+            BorderThickness = new Thickness(1);
 
             MouseUp += OnMouseUp;
             MouseEnter += SetColors;
@@ -69,7 +69,14 @@ namespace DocumentMargin.Margin
 
         private void SetEncoding(Encoding encoding)
         {
-            Content = encoding.EncodingName;
+            var name = encoding.BodyName.ToUpperInvariant();
+
+            if (encoding.CodePage == 1200)
+            {
+                name = "UTF-16";
+            }
+
+            Content = name;
         }
 
         public override void Dispose()

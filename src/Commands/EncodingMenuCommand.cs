@@ -20,15 +20,22 @@ namespace DocumentMargin.Commands
         {
             return _encodings ??= Encoding
                 .GetEncodings()
-                .OrderBy(e => e.DisplayName)
                 .Select(e => e.GetEncoding())
-                .Where(e => e.IsBrowserSave)
+                .OrderBy(e => e.EncodingName)
+                .Where(e => e.IsBrowserSave && !e.EncodingName.Contains("(Windows)"))
                 .ToList();
         }
 
         protected override void BeforeQueryStatus(OleMenuCommand menuItem, EventArgs e, Encoding item)
         {
-            menuItem.Text = $"{item.EncodingName} - Codepage {item.CodePage}";
+            var name = item.EncodingName;
+
+            if (item.CodePage == 1200)
+            {
+                name = "Unicode (UTF-16)";
+            }
+
+            menuItem.Text = name;
             menuItem.Checked = item == _bridge.CurrentDocument?.Encoding;
         }
 

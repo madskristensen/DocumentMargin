@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Commands\EncodingMenuCommand.cs" />
     <Compile Include="Commands\EncodingMenuCommandBridge.cs" />
+    <Compile Include="Commands\CustomEncodings.cs" />
     <Compile Include="Margins\BaseMargin.cs" />
     <Compile Include="Margins\LengthMargin.cs" />
     <Compile Include="Margins\SelectionMargin.cs" />

@@ -25,7 +25,7 @@ Clicking the encoding indicator will open a drop down menu that lets you change 
 
 ![Encoding](art/encoding.png)
 
-The file isn't saved automatically with the newly selected encoding. You must save the file manually (`CTRL+S`) to apply the new encoding.
+The file is saved automatically with the newly selected encoding. 
 
 ## How can I help?
 If you enjoy using the extension, please give it a ★★★★★ rating on the [Visual Studio Marketplace][marketplace].

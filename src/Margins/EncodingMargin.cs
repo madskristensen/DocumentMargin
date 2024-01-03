@@ -69,7 +69,7 @@ namespace DocumentMargin.Margin
 
         private void SetEncoding(Encoding encoding)
         {
-            var name = encoding.BodyName.ToUpperInvariant();
+            var name = encoding.BodyName.Replace("iso", "ISO").Replace("utf", "UTF");
 
             if (encoding.CodePage == 1200)
             {

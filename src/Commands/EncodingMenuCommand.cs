@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using EnvDTE;
 using Microsoft.VisualStudio.Telemetry;
-using Microsoft.VisualStudio.Text;
 
 namespace DocumentMargin.Commands
 {
@@ -51,7 +50,7 @@ namespace DocumentMargin.Commands
 
             if (item.CodePage == 65001 && item.CodePage == fileEncoding.CodePage)
             {
-                var hasBom = _bridge.CurrentDocument.HasBom();
+                _bridge.CurrentDocument.TextBuffer.Properties.TryGetProperty("hasbom", out bool hasBom);
                 isChecked = (item is UTF8WithBomEncoding && hasBom) || (item is UTF8WithoutBomEncoding && !hasBom);
             }
 
@@ -63,8 +62,6 @@ namespace DocumentMargin.Commands
         {
             if (_bridge.CurrentDocument is not null)
             {
-                _bridge.CurrentDocument.Encoding = item;
-                
                 if (_bridge.CurrentDocument.IsDirty)
                 {
                     _bridge.CurrentDocument.Save();
@@ -76,20 +73,6 @@ namespace DocumentMargin.Commands
                 tel.Properties["encoding"] = item.EncodingName;
 
                 Telemetry.TrackEvent(tel);
-            }
-        }
-    }
-
-    public static class FileExtensions
-    {
-        public static bool HasBom(this ITextDocument document)
-        {
-            using (Stream fs = new FileStream(document.FilePath, FileMode.Open))
-            {
-                var bits = new byte[3];
-                fs.Read(bits, 0, 3);
-
-                return bits[0] == 0xEF && bits[1] == 0xBB && bits[2] == 0xBF;
             }
         }
     }

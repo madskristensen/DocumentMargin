@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
 
 namespace DocumentMargin.Margin
@@ -18,11 +19,14 @@ namespace DocumentMargin.Margin
         [Import]
         public ITextDocumentFactoryService _documentService = null;
 
+        [Import]
+        internal JoinableTaskContext JoinableTaskContext = null;
+
         public IWpfTextViewMargin CreateMargin(IWpfTextViewHost wpfTextViewHost, IWpfTextViewMargin marginContainer)
         {
             ITextDocument doc = wpfTextViewHost.TextView.TextBuffer.GetTextDocument();
 
-            return doc != null ? new EncodingMargin(doc) : null;
+            return doc != null ? new EncodingMargin(doc, JoinableTaskContext.Factory) : null;
         }
     }
 }

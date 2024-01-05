@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DocumentMargin.Commands;
 using DocumentMargin.Margins;
@@ -87,7 +88,14 @@ namespace DocumentMargin.Margin
             await _jtf.SwitchToMainThreadAsync();
 
             Content = name;
-            ToolTip = $"{encoding.EncodingName} - Codepage {encoding.CodePage}";
+
+            ToolTip = new ToolTip
+            {
+                Background = Background,
+                Foreground = Foreground,
+                Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
+                Content = $"{encoding.EncodingName} - Codepage {encoding.CodePage}"
+            };
         }
 
         public static async Task<bool> HasBomAsync(ITextDocument document)

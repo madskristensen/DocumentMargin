@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using DocumentMargin.Margins;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Text.Editor;
@@ -21,7 +23,7 @@ namespace DocumentMargin.Margin
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
-            Padding = new Thickness(0, 1, 20, 0);
+            Padding = new Thickness(3, 1, 20, 0);
             MinWidth = 50;
 
             SetSelection();
@@ -57,7 +59,13 @@ namespace DocumentMargin.Margin
                     sb.AppendLine($"Selection {i + 1}:\t{selection.Extent.Length:#,#0}");
                 }
 
-                ToolTip = sb.ToString().Trim();
+                ToolTip = new ToolTip
+                {
+                    Background = Background,
+                    Foreground = Foreground,
+                    Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
+                    Content = sb.ToString().Trim(),
+                };
             }
         }
 

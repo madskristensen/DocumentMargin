@@ -19,9 +19,25 @@ This extension adds a margin to the editor that displays the text length, select
 
 When you select text, the margin will display the number of selected characters.
 
+## Selection
+When you select text, the margin will display the number of selected characters.
+
 ![Selection](art/selection.png)
 
-Clicking the encoding indicator will open a drop down menu that lets you change the encoding of the file.
+You can also make multiple selections like shown below.
+
+![Selected Text](art/selected-text.png)
+
+That will display the total number of characters selected and the number of selection shown in parenthesis. Hovering over the margin will show a tooltip that breaks down the number of characters in each selection.
+
+![Multi Selection](art/multi-selection.png)
+
+## Encoding
+The file encoding is shown in the margin as well and hovering it will show a tooltip with more details.
+
+![Encoding](art/encoding-tooltip.png)
+
+Clicking the encoding will open a drop down menu that lets you change the encoding of the file.
 
 ![Encoding](art/encoding.png)
 

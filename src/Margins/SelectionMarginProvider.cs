@@ -7,7 +7,8 @@ namespace DocumentMargin.Margin
     [Export(typeof(IWpfTextViewMarginProvider))]
     [Name(nameof(SelectionMargin))]
     [MarginContainer(PredefinedMarginNames.BottomRightCorner)]
-    [Order(After = PredefinedMarginNames.ChrMargin)]
+    [Order(Before = nameof(LengthMargin))]
+    [Order(Before = PredefinedMarginNames.RowMargin)]
     [ContentType(StandardContentTypeNames.Text)]
     [TextViewRole(PredefinedTextViewRoles.Zoomable)]
     [TextViewRole(PredefinedTextViewRoles.Document)]
@@ -16,6 +17,9 @@ namespace DocumentMargin.Margin
     {
         public IWpfTextViewMargin CreateMargin(IWpfTextViewHost wpfTextViewHost, IWpfTextViewMargin marginContainer)
         {
+            // Disable selection (MULTI/BOX) from showing up in the editor margin
+            wpfTextViewHost.TextView.Options.SetOptionValue(DefaultTextViewHostOptions.SelectionStateMarginOptionId, false);
+
             return new SelectionMargin(wpfTextViewHost.TextView);
         }
     }

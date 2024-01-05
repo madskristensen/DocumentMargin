@@ -21,8 +21,7 @@ namespace DocumentMargin.Margin
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
-            Padding = new Thickness(9, 1, 9, 0);
-            Visibility = Visibility.Collapsed;
+            Padding = new Thickness(0, 1, 14, 0);
 
             SetSelection();
         }
@@ -34,16 +33,19 @@ namespace DocumentMargin.Margin
 
         private void SetSelection()
         {
-            var length = _view.MultiSelectionBroker.AllSelections.Select(s => s.Extent.Length).Sum();
-
-            if (length > 0)
+            if (_view.Selection.IsEmpty)
             {
-                Content = $"Sel: {length}";
-                Visibility = Visibility.Visible;
+                Content = $"Sel: 0";
             }
             else
             {
-                Visibility = Visibility.Collapsed;
+                var length = _view.MultiSelectionBroker.AllSelections.Select(s => s.Extent.Length).Sum();
+                Content = $"Sel: {length:#,#0}";
+
+                if (_view.MultiSelectionBroker.AllSelections.Count > 1)
+                {
+                    Content += $"|{_view.MultiSelectionBroker.AllSelections.Count}";
+                }
             }
         }
 

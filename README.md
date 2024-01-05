@@ -24,7 +24,7 @@ When you select text, the margin will display the number of selected characters.
 
 ![Selection](art/selection.png)
 
-You can also make multiple selections like shown below.
+You can also make multiple selections like shown below using **CTRL+ALT+Selection**.
 
 ![Selected Text](art/selected-text.png)
 
@@ -42,6 +42,8 @@ Clicking the encoding will open a drop down menu that lets you change the encodi
 ![Encoding](art/encoding.png)
 
 The file is saved automatically with the newly selected encoding. 
+
+> Please note that Visual Studio guesses the encoding of the file based on the content and that might not always be correct. When the file contains a BOM (byte order mark) it will always be detected correctly.
 
 ## How can I help?
 If you enjoy using the extension, please give it a ★★★★★ rating on the [Visual Studio Marketplace][marketplace].

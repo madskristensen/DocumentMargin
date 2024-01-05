@@ -16,6 +16,18 @@
       "targetPath": "art/encoding.png"
     },
     {
+      "pathOnDisk": "art/encoding-tooltip.png",
+      "targetPath": "art/encoding-tooltip.png"
+    },
+    {
+      "pathOnDisk": "art/multi-selection.png",
+      "targetPath": "art/multi-selection.png"
+    },
+    {
+      "pathOnDisk": "art/selected-text.png",
+      "targetPath": "art/selected-text.png"
+    },
+    {
       "pathOnDisk": "art/selection.png",
       "targetPath": "art/selection.png"
     }

@@ -37,8 +37,6 @@ namespace DocumentMargin.Margin
             SetEncodingAsync(_doc.Encoding).FireAndForget();
         }
 
-        public override string MarginName => "Encoding Margin";
-
         private void SetColors(object sender = null, MouseEventArgs e = null)
         {
             if (IsMouseOver)
@@ -89,6 +87,7 @@ namespace DocumentMargin.Margin
             await _jtf.SwitchToMainThreadAsync();
 
             Content = name;
+            ToolTip = $"{encoding.EncodingName} - Codepage {encoding.CodePage}";
         }
 
         public static async Task<bool> HasBomAsync(ITextDocument document)

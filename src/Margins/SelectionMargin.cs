@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text;
 using System.Windows;
 using DocumentMargin.Margins;
 using Microsoft.VisualStudio.PlatformUI;
@@ -8,7 +9,6 @@ namespace DocumentMargin.Margin
 {
     internal class SelectionMargin : BaseMargin
     {
-        public override string MarginName => "Selection Margin";
         private readonly ITextView2 _view;
         private bool _isDisposed;
 
@@ -21,7 +21,8 @@ namespace DocumentMargin.Margin
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
-            Padding = new Thickness(0, 1, 14, 0);
+            Padding = new Thickness(0, 1, 20, 0);
+            MinWidth = 50;
 
             SetSelection();
         }
@@ -36,6 +37,7 @@ namespace DocumentMargin.Margin
             if (_view.Selection.IsEmpty)
             {
                 Content = $"Sel: 0";
+                ToolTip = null;
             }
             else
             {
@@ -44,8 +46,18 @@ namespace DocumentMargin.Margin
 
                 if (_view.MultiSelectionBroker.AllSelections.Count > 1)
                 {
-                    Content += $"|{_view.MultiSelectionBroker.AllSelections.Count}";
+                    Content += $" ({_view.MultiSelectionBroker.AllSelections.Count})";
                 }
+
+                StringBuilder sb = new();
+
+                for (var i = 0; i < _view.MultiSelectionBroker.AllSelections.Count; i++)
+                {
+                    Microsoft.VisualStudio.Text.Selection selection = _view.MultiSelectionBroker.AllSelections[i];
+                    sb.AppendLine($"Selection {i + 1}:\t{selection.Extent.Length:#,#0}");
+                }
+
+                ToolTip = sb.ToString().Trim();
             }
         }
 

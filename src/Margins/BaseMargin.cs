@@ -6,8 +6,6 @@ namespace DocumentMargin.Margins
 {
     internal abstract class BaseMargin : Label, IWpfTextViewMargin
     {
-        public abstract string MarginName { get; }
-
         public FrameworkElement VisualElement => this;
 
         public double MarginSize => ActualHeight;
@@ -18,7 +16,7 @@ namespace DocumentMargin.Margins
 
         public ITextViewMargin GetTextViewMargin(string marginName)
         {
-            return (marginName == MarginName) ? this : null;
+            return (marginName == GetType().Name) ? this : null;
         }
     }
 }

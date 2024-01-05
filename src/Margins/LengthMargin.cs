@@ -8,7 +8,6 @@ namespace DocumentMargin.Margin
 {
     internal class LengthMargin : BaseMargin
     {
-        public override string MarginName => "Length Margin";
         private readonly ITextView2 _view;
         private bool _isDisposed;
 
@@ -22,6 +21,7 @@ namespace DocumentMargin.Margin
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
             Padding = new Thickness(0, 1, 0, 0);
+            MinWidth = 100;
 
             SetValue();
         }

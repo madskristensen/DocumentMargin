@@ -34,7 +34,7 @@ namespace DocumentMargin.Margin
         private void SetValue()
         {
             ITextSnapshot snapshot = _view.TextSnapshot;
-            Content = $"Length: {snapshot.Length:#,#0}     Lines: {snapshot.LineCount:#,#.}";
+            Content = $"Length: {snapshot.Length:#,#0}     Lines: {snapshot.LineCount:#,#.0}";
         }
 
         public override void Dispose()

@@ -2,7 +2,6 @@
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using DocumentMargin.Margins;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Text.Editor;
@@ -23,10 +22,11 @@ namespace DocumentMargin.Margin
             SetResourceReference(ForegroundProperty, EnvironmentColors.ComboBoxFocusedTextBrushKey);
             FontSize = 11;
             Margin = new Thickness(0, 0, 0, 0);
-            Padding = new Thickness(3, 1, 20, 0);
-            MinWidth = 50;
+            Padding = new Thickness(5, 1, 0, 0);
+            Visibility = Visibility.Collapsed;
 
             SetSelection();
+            ToolTip = ""; // Initialize the tooltip
         }
 
         private void OnSelectionChanged(object sender, EventArgs e)
@@ -38,8 +38,7 @@ namespace DocumentMargin.Margin
         {
             if (_view.Selection.IsEmpty)
             {
-                Content = $"Sel: 0";
-                ToolTip = null;
+                Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -51,22 +50,27 @@ namespace DocumentMargin.Margin
                     Content += $" ({_view.MultiSelectionBroker.AllSelections.Count})";
                 }
 
-                StringBuilder sb = new();
-
-                for (var i = 0; i < _view.MultiSelectionBroker.AllSelections.Count; i++)
-                {
-                    Microsoft.VisualStudio.Text.Selection selection = _view.MultiSelectionBroker.AllSelections[i];
-                    sb.AppendLine($"Selection {i + 1}:\t{selection.Extent.Length:#,#0}");
-                }
-
-                ToolTip = new ToolTip
-                {
-                    Background = Background,
-                    Foreground = Foreground,
-                    Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
-                    Content = sb.ToString().Trim(),
-                };
+                Visibility = Visibility.Visible;
             }
+        }
+
+        protected override void OnToolTipOpening(ToolTipEventArgs e)
+        {
+            StringBuilder sb = new();
+
+            for (var i = 0; i < _view.MultiSelectionBroker.AllSelections.Count; i++)
+            {
+                Microsoft.VisualStudio.Text.Selection selection = _view.MultiSelectionBroker.AllSelections[i];
+                sb.AppendLine($"Selection {i + 1}:\t{selection.Extent.Length:#,#0}");
+            }
+
+            ToolTip = new ToolTip
+            {
+                Background = Background,
+                Foreground = Foreground,
+                Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
+                Content = sb.ToString().Trim(),
+            };
         }
 
         public override void Dispose()

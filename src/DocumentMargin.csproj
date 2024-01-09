@@ -50,9 +50,11 @@
     <Compile Include="Commands\CustomEncodings.cs" />
     <Compile Include="Margins\BaseMargin.cs" />
     <Compile Include="Margins\LengthMargin.cs" />
+    <Compile Include="Margins\InfoMargin.cs" />
     <Compile Include="Margins\SelectionMargin.cs" />
     <Compile Include="Margins\EncodingMargin.cs" />
     <Compile Include="Margins\LengthMarginProvider.cs" />
+    <Compile Include="Margins\InfoMarginProvider.cs" />
     <Compile Include="Margins\SelectionMarginProvider.cs" />
     <Compile Include="Margins\EncodingMarginProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

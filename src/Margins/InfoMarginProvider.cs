@@ -4,19 +4,18 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace DocumentMargin.Margin
 {
-    //[Export(typeof(IWpfTextViewMarginProvider))]
-    [Name(nameof(LengthMargin))]
+    [Export(typeof(IWpfTextViewMarginProvider))]
+    [Name(nameof(InfoMargin))]
     [MarginContainer(PredefinedMarginNames.BottomRightCorner)]
-    [Order(Before = PredefinedMarginNames.RowMargin)]
+    [Order(After = nameof(EncodingMargin))]
     [ContentType(StandardContentTypeNames.Text)]
     [TextViewRole(PredefinedTextViewRoles.Zoomable)]
     [TextViewRole(PredefinedTextViewRoles.Document)]
-    [DeferCreation(OptionName = DefaultTextViewHostOptions.EditingStateMarginOptionName)]
-    internal class LengthMarginProvider : IWpfTextViewMarginProvider
+    internal class InfoMarginProvider : IWpfTextViewMarginProvider
     {
         public IWpfTextViewMargin CreateMargin(IWpfTextViewHost wpfTextViewHost, IWpfTextViewMargin marginContainer)
         {
-            return new LengthMargin(wpfTextViewHost.TextView);
+            return new InfoMargin(wpfTextViewHost.TextView);
         }
     }
 }

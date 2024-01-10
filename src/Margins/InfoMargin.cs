@@ -17,21 +17,23 @@ namespace DocumentMargin.Margin
             _view = (ITextView2)view;
 
             SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
-            Margin = new Thickness(0, 0, 0, 0);
 
-            var image = new CrispImage()
+            Children.Add(new CrispImage()
             {
                 Moniker = KnownMonikers.StatusInformationOutlineNoColor,
                 Width = 14,
                 Height = 14,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(2, 0, 5, 0),
+                Margin = new Thickness(4, 0, 5, 0),
+            });
+
+            ToolTip = new ToolTip()
+            {
+                Background = Background,
+                Foreground = FindResource(EnvironmentColors.ToolWindowTextBrushKey) as Brush,
+                Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
             };
-
-            Children.Add(image);
-
-            ToolTip = ""; // Initialize the tooltip
         }
 
         public FrameworkElement VisualElement => this;
@@ -43,18 +45,12 @@ namespace DocumentMargin.Margin
         protected override void OnToolTipOpening(ToolTipEventArgs e)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"Length:\t\t{_view.TextBuffer.CurrentSnapshot.Length:#,#}");
-            sb.AppendLine($"Lines:\t\t{_view.TextBuffer.CurrentSnapshot.LineCount:#,#}");
-            sb.AppendLine($"Caret:\t\t{_view.Caret.Position.BufferPosition.Position:#,#}");
+            sb.AppendLine($"Length:\t\t{_view.TextSnapshot.Length:#,#0}");
+            sb.AppendLine($"Lines:\t\t{_view.TextSnapshot.LineCount:#,#0}");
+            sb.AppendLine($"Caret:\t\t{_view.Caret.Position.BufferPosition.Position:#,#0}");
             sb.AppendLine($"Language:\t{_view.TextBuffer.ContentType.DisplayName}");
 
-            ToolTip = new ToolTip()
-            {
-                Background = Background,
-                Foreground = FindResource(EnvironmentColors.ToolWindowTextBrushKey) as Brush,
-                Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
-                Content = sb.ToString().Trim(),
-            };
+            ((ToolTip)ToolTip).Content = sb.ToString().Trim();
         }
 
         public ITextViewMargin GetTextViewMargin(string marginName)

@@ -27,7 +27,6 @@ namespace DocumentMargin.Margin
 
             SetColors();
             FontSize = 11;
-            Margin = new Thickness(0, 0, 0, 0);
             Padding = new Thickness(9, 0, 9, 0);
             BorderThickness = new Thickness(1);
 
@@ -50,7 +49,7 @@ namespace DocumentMargin.Margin
             {
                 SetResourceReference(BackgroundProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
                 SetResourceReference(ForegroundProperty, EnvironmentColors.ToolWindowTextBrushKey);
-                SetResourceReference(BorderBrushProperty, EnvironmentColors.ScrollBarBackgroundBrushKey);
+                SetResourceReference(BorderBrushProperty, EnvironmentColors.CommandBarMouseOverBackgroundGradientBrushKey);
 
             }
         }

@@ -13,11 +13,14 @@ or get the [CI build][vsixgallery].
 
 > Inspired by [a popular Visual Studio feature request](https://developercommunity.visualstudio.com/t/Code-Editor-Horizontal-Scroll-Bar-Displa/10514754) on Developer Community.
 
-This extension adds a margin to the editor that displays the text length, selection length, and total number of lines in the file. It also shows the encoding of the of the file and let you easily change it.
+This extension adds information about the document to the bottom editor margin. It shows the selection, length, and language details, as well as the encoding of the of the file and let you easily change it.
 
 ![Basic](art/basic.png)
 
-When you select text, the margin will display the number of selected characters.
+## Document info
+Hovering the mouse over the info icon in the corner, shows a tootip with more details about the document.
+
+![Info](art/info.png)
 
 ## Selection
 When you select text, the margin will display the number of selected characters.

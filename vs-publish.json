@@ -12,6 +12,10 @@
       "targetPath": "art/basic.png"
     },
     {
+      "pathOnDisk": "art/info.png",
+      "targetPath": "art/info.png"
+    },
+    {
       "pathOnDisk": "art/encoding.png",
       "targetPath": "art/encoding.png"
     },

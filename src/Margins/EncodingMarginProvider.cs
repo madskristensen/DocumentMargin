@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.IO;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Threading;
@@ -12,7 +13,7 @@ namespace DocumentMargin.Margin
     [Order(After = PredefinedMarginNames.LineEndingMargin)]
     [ContentType(StandardContentTypeNames.Text)]
     [TextViewRole(PredefinedTextViewRoles.Zoomable)]
-    [TextViewRole(PredefinedTextViewRoles.Document)]
+    [TextViewRole(PredefinedTextViewRoles.PrimaryDocument)]
     [DeferCreation(OptionName = DefaultTextViewHostOptions.EditingStateMarginOptionName)]
     internal class EncodingMarginProvider : IWpfTextViewMarginProvider
     {
@@ -25,8 +26,15 @@ namespace DocumentMargin.Margin
         public IWpfTextViewMargin CreateMargin(IWpfTextViewHost wpfTextViewHost, IWpfTextViewMargin marginContainer)
         {
             ITextDocument doc = wpfTextViewHost.TextView.TextBuffer.GetTextDocument();
+            var extension = Path.GetExtension(doc.FilePath);
 
-            return doc != null ? new EncodingMargin(doc, JoinableTaskContext.Factory) : null;
+            // It fails in XAML files for some reason, which prevents the designer to load
+            if (!extension.Equals(".xaml", StringComparison.OrdinalIgnoreCase))
+            {
+                return doc != null ? new EncodingMargin(doc, JoinableTaskContext.Factory) : null;
+            }
+
+            return null;
         }
     }
 }

@@ -5,13 +5,6 @@ VisualStudioVersion = 17.9.34321.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentMargin", "src\DocumentMargin.csproj", "{8C43CBF1-7EA5-4ECF-BAB6-B254D97A6211}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C50BA7C5-2633-4425-9674-DBACA9A90A20}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\build.yaml = .github\workflows\build.yaml
-		README.md = README.md
-		vs-publish.json = vs-publish.json
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

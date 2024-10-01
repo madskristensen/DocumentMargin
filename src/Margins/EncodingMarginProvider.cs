@@ -26,6 +26,9 @@ namespace DocumentMargin.Margin
         public IWpfTextViewMargin CreateMargin(IWpfTextViewHost wpfTextViewHost, IWpfTextViewMargin marginContainer)
         {
             ITextDocument doc = wpfTextViewHost.TextView.TextBuffer.GetTextDocument();
+
+            if (string.IsNullOrEmpty(doc?.FilePath)) return null;
+
             var extension = Path.GetExtension(doc.FilePath);
 
             // It fails in XAML files for some reason, which prevents the designer to load
